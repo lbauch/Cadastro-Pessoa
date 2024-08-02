@@ -1,0 +1,25 @@
+package com.cursoJava.Curso.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cursoJava.Curso.entities.Municipio;
+import com.cursoJava.Curso.repositories.MunicipioRepository;
+
+@Service
+public class MunicipioService {
+	@Autowired
+	private MunicipioRepository repository;
+	
+	public List<Municipio> findAll(){
+		return repository.findAll();
+	}
+	
+	public Municipio findById(Long id) {
+		Optional<Municipio> obj = repository.findById(id);
+		return obj.get();
+	}
+}

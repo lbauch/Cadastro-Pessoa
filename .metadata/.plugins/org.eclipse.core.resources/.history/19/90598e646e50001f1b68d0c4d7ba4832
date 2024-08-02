@@ -1,0 +1,5 @@
+package com.cursoJava.Curso.services;
+
+public class EnderecoService {
+
+}

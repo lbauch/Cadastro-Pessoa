@@ -1,3 +1,4 @@
+/*
 package com.cursoJava.Curso.config;
 
 import java.time.Instant;
@@ -27,7 +28,7 @@ import com.cursoJava.Curso.repositories.UserRepository;
 //Define o perfil a ser utilizado para o banco
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
-	
+
 	//@Autowired simboliza injeção de dependência
 	@Autowired
 	private UserRepository userRepository;
@@ -49,7 +50,7 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-		
+
 		Category cat1 = new Category(null, "Electronics");
 		Category cat2 = new Category(null, "Books");
 		Category cat3 = new Category(null, "Computers");
@@ -94,7 +95,9 @@ public class TestConfig implements CommandLineRunner{
 		
 		orderItemRepository.save(oi1);
 		paymentRepository.save(pay1);
+		
 	}
 	
 	
 }
+*/

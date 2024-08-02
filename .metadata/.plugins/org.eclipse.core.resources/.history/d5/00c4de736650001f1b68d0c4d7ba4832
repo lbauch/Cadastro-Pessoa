@@ -1,0 +1,5 @@
+package com.cursoJava.Curso.entities;
+
+public class Pessoa {
+
+}

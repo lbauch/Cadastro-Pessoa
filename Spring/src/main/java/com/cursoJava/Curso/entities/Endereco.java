@@ -3,6 +3,9 @@ package com.cursoJava.Curso.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +34,7 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "municipio_id")
 	private Municipio municipio;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "endereco")
 	private Pessoa pessoa;
 	
@@ -38,13 +42,14 @@ public class Endereco implements Serializable {
 		
 	}
 	
-	public Endereco(Long id, String numero, String complemento, String cep, String bairro) {
+	public Endereco(Long id, String cep, String bairro, String numero, String complemento, Municipio municipio) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.cep = cep;
 		this.bairro = bairro;
+		this.municipio = municipio;
 	}
 
 	public Long getId() {

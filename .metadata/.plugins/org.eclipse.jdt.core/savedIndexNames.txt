@@ -12,8 +12,8 @@ INDEX VERSION 1.134+C:\Users\Usuario\Desktop\EmiteAí\Cadastro-Pessoa\.metadata\.
 4273952636.index
 869868278.index
 2074203282.index
-1336948817.index
 2756308033.index
+1336948817.index
 1060241389.index
 3237563627.index
 4034930544.index
@@ -35,11 +35,11 @@ INDEX VERSION 1.134+C:\Users\Usuario\Desktop\EmiteAí\Cadastro-Pessoa\.metadata\.
 2563980156.index
 288109160.index
 4111702622.index
-2871148059.index
-1753972072.index
-1263015644.index
-645455726.index
 4244771347.index
+1753972072.index
+2871148059.index
+645455726.index
+1263015644.index
 2849385480.index
 1624093377.index
 2248605280.index

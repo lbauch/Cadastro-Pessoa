@@ -28,7 +28,6 @@ public class Pessoa implements Serializable {
 	private String fone;
 	private String cpf;
 
-	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
@@ -37,12 +36,13 @@ public class Pessoa implements Serializable {
 
 	}
 
-	public Pessoa(Long id, String nome, String fone, String cpf) {
+	public Pessoa(Long id, String nome, String fone, String cpf, Endereco endereco) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.fone = fone;
 		this.cpf = cpf;
+		this.endereco = endereco;
 	}
 
 	public Long getId() {

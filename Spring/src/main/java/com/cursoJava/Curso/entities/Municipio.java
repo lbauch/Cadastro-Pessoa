@@ -16,7 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_endereco")
+@Table(name = "tb_municipio")
 public class Municipio implements Serializable {
 
 	private static final long serialVersionUID = 1L;

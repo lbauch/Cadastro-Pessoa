@@ -18,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.cursoJava.Curso.entities.Pessoa;
 import com.cursoJava.Curso.services.PessoaService;
 
+import jakarta.transaction.Transactional;
+
 @RestController
 @RequestMapping(value = "/pessoas")
 public class PessoaResource {
@@ -37,6 +39,7 @@ public class PessoaResource {
 		return ResponseEntity.ok().body(obj);
 	}	
 	
+	@Transactional
 	@PostMapping
 	public ResponseEntity<Pessoa> insert(@RequestBody Pessoa obj) {
 		obj = service.insert(obj);

@@ -26,9 +26,9 @@ public class TestConfig implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Endereco e1 = new Endereco(null, "89053500", "Itoupava Norte", "S/N", "Casa", "Blumenau", "SC");
-		Endereco e2 = new Endereco(null, "85010013", "Bela Vista", "1503", null, "Gaspar", "SC");
-		Endereco e3 = new Endereco(null, "85010013", "Guarani", "111", "Apto 505", "São Paulo", "SP");
+		Endereco e1 = new Endereco(null, "89053500", "Almirante Armin Zimmermann", "Casa", "Itoupava Norte", "Blumenau", "SC", "S/N");
+		Endereco e2 = new Endereco(null, "85010013", "Rua Principal", null, "Bela Vista", "Gaspar", "SC", "1503");
+		Endereco e3 = new Endereco(null, "85858501", "Rua Torta" ,"Apto 505", "Guarani", "Gramado", "RS", "111");
 
 		enderecoRepository.saveAll(Arrays.asList(e1,e2,e3));
 		

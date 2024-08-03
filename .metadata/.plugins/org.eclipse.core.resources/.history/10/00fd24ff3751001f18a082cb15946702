@@ -1,0 +1,69 @@
+package com.cursoJava.Curso.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+
+import com.cursoJava.Curso.entities.Endereco;
+import com.cursoJava.Curso.entities.Pessoa;
+import com.cursoJava.Curso.repositories.PessoaRepository;
+import com.cursoJava.Curso.services.exceptions.DatabaseException;
+import com.cursoJava.Curso.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
+
+@Service
+public class PessoaService {
+
+	@Autowired
+	private PessoaRepository repository;
+	
+	@Autowired
+	private	EnderecoService endService;
+	
+	public List<Pessoa> findAll(){
+		return repository.findAll();
+	}
+	
+	public Pessoa findById(Long id) {
+		Optional<Pessoa> obj = repository.findById(id);
+		return obj.get();
+	}
+	
+	public Pessoa insert(Pessoa obj) {
+		Endereco end = endService.consultaEnderecoViaCeps(obj.getEndereco().getCep(), obj.getEndereco().getNumero(), obj.getEndereco().getComplemento());
+		obj.setEndereco(end);
+		return repository.save(obj);
+	}
+
+	public void delete(Long id) {
+		try {
+			repository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
+	}
+
+	public Pessoa update(Long id, Pessoa obj) {
+		try {
+			Pessoa entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+	}
+
+	private void updateData(Pessoa entity, Pessoa obj) {
+		entity.setNome(obj.getNome());
+		entity.setFone(obj.getFone());
+		entity.setCpf(obj.getCpf());
+	}
+	
+}

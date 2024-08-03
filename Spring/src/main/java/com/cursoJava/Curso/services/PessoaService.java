@@ -1,5 +1,9 @@
 package com.cursoJava.Curso.services;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,10 +12,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.cursoJava.Curso.entities.Endereco;
 import com.cursoJava.Curso.entities.Pessoa;
 import com.cursoJava.Curso.repositories.PessoaRepository;
 import com.cursoJava.Curso.services.exceptions.DatabaseException;
 import com.cursoJava.Curso.services.exceptions.ResourceNotFoundException;
+import com.opencsv.CSVWriter;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -20,6 +26,9 @@ public class PessoaService {
 
 	@Autowired
 	private PessoaRepository repository;
+	
+	@Autowired
+	private	EnderecoService endService;
 	
 	public List<Pessoa> findAll(){
 		return repository.findAll();
@@ -31,6 +40,9 @@ public class PessoaService {
 	}
 	
 	public Pessoa insert(Pessoa obj) {
+		Endereco end = endService.consultaEnderecoViaCeps(obj.getEndereco().getCep(), obj.getEndereco().getNumero(), obj.getEndereco().getComplemento());
+		obj.setEndereco(end);
+		endService.inserir(end);
 		return repository.save(obj);
 	}
 
@@ -58,6 +70,40 @@ public class PessoaService {
 		entity.setNome(obj.getNome());
 		entity.setFone(obj.getFone());
 		entity.setCpf(obj.getCpf());
+	}
+	
+	public void gerarCsv() {
+		
+		final String CSV_PATH = "/generatedCsv.csv";
+		
+		try {
+			
+			FileWriter fw = new FileWriter(new File(CSV_PATH));
+			CSVWriter cw = new CSVWriter(fw);
+			
+			String[] headers = {"id", "nome", "fone", "cpf", "cep", "logradouro", "complemento", "bairro", "localidade", "uf", "numero"};
+			
+			List<Pessoa> pessoas = findAll(); 
+			List<String[]> data = new ArrayList<String[]>();
+			
+			data.add(headers);
+			
+			for(Pessoa p: pessoas) {
+				String[] item = {p.getId().toString(), p.getNome(), p.getFone(), p.getCpf(), p.getEndereco().getCep(), p.getEndereco().getLogradouro(),
+						p.getEndereco().getComplemento(), p.getEndereco().getBairro(), p.getEndereco().getLocalidade(), p.getEndereco().getUf(), p.getEndereco().getNumero()};
+				
+				data.add(item);
+			}
+			
+			cw.writeAll(data);
+			
+			cw.close();
+			fw.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 }

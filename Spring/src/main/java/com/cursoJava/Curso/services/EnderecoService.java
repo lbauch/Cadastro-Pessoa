@@ -1,5 +1,9 @@
 package com.cursoJava.Curso.services;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,10 +12,13 @@ import org.springframework.stereotype.Service;
 
 import com.cursoJava.Curso.entities.Endereco;
 import com.cursoJava.Curso.repositories.EnderecoRepository;
+import com.google.gson.Gson;
 
 @Service
 public class EnderecoService {
 
+	Gson gson = new Gson();
+	
 	@Autowired
 	private EnderecoRepository repository;
 	
@@ -24,4 +31,29 @@ public class EnderecoService {
 		return obj.get();
 	}
 	
+	private Endereco buscaEndereco(String cep) {
+		URI endereco = URI.create("https://viacep.com.br/ws/" + cep + "/json");
+        HttpRequest request = HttpRequest.newBuilder().uri(endereco).build();
+
+        try {
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            return gson.fromJson(response.body(), Endereco.class);
+
+        } catch (Exception  e) {
+            throw new RuntimeException("Nao foi possível obter esse cep");
+        }
+    }
+
+    public void inserir(Endereco endereco){
+       repository.save(endereco);
+    }
+   
+    public Endereco consultaEnderecoViaCeps(String cep, String numero, String complemento){
+        Endereco endereco = buscaEndereco(cep);
+        endereco.setNumero(numero);
+        endereco.setComplemento(complemento);
+
+        return endereco;
+    }
+    
 }

@@ -5,13 +5,10 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -29,10 +26,8 @@ public class Endereco implements Serializable {
 	private String complemento;
 	private String cep;
 	private String bairro;
-
-	@ManyToOne
-	@JoinColumn(name = "municipio_id")
-	private Municipio municipio;
+	private String localidade;
+	private String uf;
 	
 	@JsonIgnore
 	@OneToOne(mappedBy = "endereco")
@@ -42,14 +37,15 @@ public class Endereco implements Serializable {
 		
 	}
 	
-	public Endereco(Long id, String cep, String bairro, String numero, String complemento, Municipio municipio) {
+	public Endereco(Long id, String cep, String bairro, String numero, String complemento, String localidade, String uf) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.cep = cep;
 		this.bairro = bairro;
-		this.municipio = municipio;
+		this.localidade = localidade;
+		this.uf = uf;
 	}
 
 	public Long getId() {
@@ -92,14 +88,22 @@ public class Endereco implements Serializable {
 		this.bairro = bairro;
 	}
 
-	public Municipio getMunicipio() {
-		return municipio;
+	public String getLocalidade() {
+		return localidade;
 	}
 
-	public void setMunicipio(Municipio municipio) {
-		this.municipio = municipio;
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 	
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
 	public Pessoa getPessoa() {
 		return pessoa;
 	}

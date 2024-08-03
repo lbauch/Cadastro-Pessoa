@@ -9,19 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.cursoJava.Curso.entities.Endereco;
-import com.cursoJava.Curso.entities.Municipio;
 import com.cursoJava.Curso.entities.Pessoa;
-import com.cursoJava.Curso.entities.enums.Uf;
 import com.cursoJava.Curso.repositories.EnderecoRepository;
-import com.cursoJava.Curso.repositories.MunicipioRepository;
 import com.cursoJava.Curso.repositories.PessoaRepository;
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
-
-	@Autowired
-	private MunicipioRepository municipioRepository;
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
@@ -31,15 +25,10 @@ public class TestConfig implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Municipio mun1 = new Municipio(null, "Blumenau", Uf.SC);
-		Municipio mun2 = new Municipio(null, "Gaspar", Uf.SC);
-		Municipio mun3 = new Municipio(null, "São Paulo", Uf.SP);
 		
-		municipioRepository.saveAll(Arrays.asList(mun1, mun2, mun3));
-		
-		Endereco e1 = new Endereco(null, "89053500", "Itoupava Norte", "S/N", "Casa", mun1);
-		Endereco e2 = new Endereco(null, "85010013", "Bela Vista", "1503", null, mun2);
-		Endereco e3 = new Endereco(null, "85010013", "Guarani", "111", "Apto 505", mun3);
+		Endereco e1 = new Endereco(null, "89053500", "Itoupava Norte", "S/N", "Casa", "Blumenau", "SC");
+		Endereco e2 = new Endereco(null, "85010013", "Bela Vista", "1503", null, "Gaspar", "SC");
+		Endereco e3 = new Endereco(null, "85010013", "Guarani", "111", "Apto 505", "São Paulo", "SP");
 
 		enderecoRepository.saveAll(Arrays.asList(e1,e2,e3));
 		

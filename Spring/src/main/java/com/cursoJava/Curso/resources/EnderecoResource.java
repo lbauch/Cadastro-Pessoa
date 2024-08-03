@@ -1,16 +1,25 @@
 package com.cursoJava.Curso.resources;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cursoJava.Curso.entities.Endereco;
 import com.cursoJava.Curso.services.EnderecoService;
+import com.google.gson.Gson;
 
 @RestController
 @RequestMapping(value = "/enderecos")
@@ -22,7 +31,6 @@ public class EnderecoResource {
 	@GetMapping
 	public ResponseEntity<List<Endereco>> findAll() {
 		List<Endereco> list = service.findAll();
-		
 		return ResponseEntity.ok().body(list);
 	}
 	
@@ -31,7 +39,24 @@ public class EnderecoResource {
 		Endereco obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
-	
-	
+	/*
+	@PostMapping(value = "/", produces = "application/json")
+	public ResponseEntity<Endereco> cadastrar(@RequestBody @Validated Endereco end) throws Exception{
+		URL url = new URL("https://viacep.com.br/ws/+end.getCep()+/json/");
+		URLConnection connection = url.openConnection();
+		InputStream is = connection.getInputStream();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		String cep = "";
+		StringBuilder jsonCep = new StringBuilder();
+		
+		while((cep = br.readLine()) != null) {
+			jsonCep.append(cep);
+		}
+		
+		Endereco enderecoAux = new Gson().fromJson(jsonCep.toString(), Endereco.class);
+		end.setBairro(cep)
+		
+		return null;
+	}*/
 }

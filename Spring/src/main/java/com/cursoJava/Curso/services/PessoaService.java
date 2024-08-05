@@ -7,23 +7,33 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.cursoJava.Curso.entities.Endereco;
 import com.cursoJava.Curso.entities.Pessoa;
 import com.cursoJava.Curso.repositories.PessoaRepository;
+import com.cursoJava.Curso.resources.PessoaResource;
 import com.cursoJava.Curso.services.exceptions.DatabaseException;
 import com.cursoJava.Curso.services.exceptions.ResourceNotFoundException;
 import com.opencsv.CSVWriter;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class PessoaService {
 
+	private static final String CSV_PATH = "/generatedCsv.csv";
+
+	public static final Logger log = LoggerFactory.getLogger(PessoaService.class);
+	
 	@Autowired
 	private PessoaRepository repository;
 	
@@ -31,11 +41,13 @@ public class PessoaService {
 	private	EnderecoService endService;
 	
 	public List<Pessoa> findAll(){
+		log.debug("findAll");
 		return repository.findAll();
 	}
-	
+		
 	public Pessoa findById(Long id) {
 		Optional<Pessoa> obj = repository.findById(id);
+		log.debug("findById,{},endereço,{}", repository.toString(), endService.toString());
 		return obj.get();
 	}
 	
@@ -43,11 +55,13 @@ public class PessoaService {
 		Endereco end = endService.consultaEnderecoViaCeps(obj.getEndereco().getCep(), obj.getEndereco().getNumero(), obj.getEndereco().getComplemento());
 		obj.setEndereco(end);
 		endService.inserir(end);
+		log.debug("instert,{},endereço,{}", repository.toString(), endService.toString());
 		return repository.save(obj);
 	}
 
 	public void delete(Long id) {
 		try {
+			log.debug("delete,{},endereço,{}", repository.toString(), endService.toString());
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
@@ -58,6 +72,7 @@ public class PessoaService {
 
 	public Pessoa update(Long id, Pessoa obj) {
 		try {
+			log.debug("Update,{},endereço,{}", repository.toString(), endService.toString());
 			Pessoa entity = repository.getReferenceById(id);
 			updateData(entity, obj);
 			return repository.save(entity);
@@ -71,11 +86,9 @@ public class PessoaService {
 		entity.setFone(obj.getFone());
 		entity.setCpf(obj.getCpf());
 	}
-	
+
 	public void gerarCsv() {
-		
-		final String CSV_PATH = "/generatedCsv.csv";
-		
+				
 		try {
 			
 			FileWriter fw = new FileWriter(new File(CSV_PATH));

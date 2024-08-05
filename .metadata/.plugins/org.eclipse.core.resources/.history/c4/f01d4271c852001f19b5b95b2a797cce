@@ -1,0 +1,4 @@
+spring.application.name=Curso
+spring.profiles.active=dev
+spring.jpa.open-in-view=true
+

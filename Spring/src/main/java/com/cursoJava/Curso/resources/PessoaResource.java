@@ -3,6 +3,8 @@ package com.cursoJava.Curso.resources;
 import java.net.URI;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,11 +21,12 @@ import com.cursoJava.Curso.entities.Pessoa;
 import com.cursoJava.Curso.services.PessoaService;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(value = "/pessoas")
 public class PessoaResource {
-
+	
 	@Autowired
 	private PessoaService service;
 
@@ -37,7 +40,7 @@ public class PessoaResource {
 	public ResponseEntity<Pessoa> findById(@PathVariable Long id) {
 		Pessoa obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
-	}	
+	}
 	
 	@Transactional
 	@PostMapping
@@ -58,4 +61,5 @@ public class PessoaResource {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
+	
 }

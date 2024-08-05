@@ -82,6 +82,11 @@ public class Pessoa implements Serializable {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+	
+	@Override
+	public String toString() {
+		return getId().toString() + "," + getNome().toString() + "," + getFone().toString() + getCpf().toString() + getEndereco().toString();
+	}
 
 	@Override
 	public int hashCode() {

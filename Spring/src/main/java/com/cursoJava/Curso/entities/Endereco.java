@@ -123,6 +123,12 @@ public class Endereco implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return getId().toString() + "," + getCep().toString() + "," + getLogradouro().toString() + "," + getComplemento().toString() + "," + getBairro().toString() +
+				"," + getLocalidade().toString() + "," + getUf().toString() + "," + getNumero().toString();
+	}
+	
+	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}

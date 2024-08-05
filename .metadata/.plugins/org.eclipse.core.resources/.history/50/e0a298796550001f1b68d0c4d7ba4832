@@ -1,5 +1,0 @@
-package com.cursoJava.Curso.entities.enums;
-
-public enum Uf {
-
-}

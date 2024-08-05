@@ -1,7 +1,0 @@
-spring.application.name=Curso
-spring.profiles.active=dev
-spring.jpa.open-in-view=true
-
-logging.level.root=info
-logging.level.br.edu.utfpr:debug
-logging.file.name=/var/spring.log

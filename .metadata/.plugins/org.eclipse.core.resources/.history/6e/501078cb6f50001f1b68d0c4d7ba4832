@@ -1,5 +1,0 @@
-package com.cursoJava.Curso.repositories;
-
-public interface MunicipioRepository {
-
-}

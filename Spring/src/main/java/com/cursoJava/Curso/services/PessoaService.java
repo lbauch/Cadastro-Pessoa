@@ -119,4 +119,15 @@ public class PessoaService {
 
 	}
 	
+	/*
+	@RabbitListener(bindings = @QueueBinding(value = @Queue(UsuarioMensagemConfig.NOME_FILA),
+			exchange = @Exchange(name = UsuarioMensagemConfig.NOME_EXCHANGE),
+			key = PessoaMsgConfig.ROUTING_KEY))
+	public void processMessage(final Message message, final Usuario usuario) {
+		
+		log.info("Routing key{}", message.getMessageProperties().getPriority());
+		log.ingo("Consumindo usuario {}", usuario);
+	}
+	*/
+
 }
